@@ -1,9 +1,11 @@
 package controller
 
 import (
+	"encoding/json"
 	"go-practice/CONVERTER/models"
 	service "go-practice/CONVERTER/services"
 	"net/http"
+	"os"
 	"path/filepath"
 	"strings"
 )
@@ -57,11 +59,28 @@ func (h *ConvertController) ConvertFile(w http.ResponseWriter, r *http.Request) 
 		http.Error(w, "conversion failed", 500)
 		return
 	}
-	w.Header().Set("X-Message", "File converted successfully")
-	w.Header().Set("Content-Type", convertedFile.ContentType)
-	w.Header().Set("Content-Disposition", "attachment; filename="+convertedFile.Name)
+	err = os.MkdirAll("downloads", 0755)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 
-	_, err = w.Write(convertedFile.Data)
+	err = os.WriteFile(
+		filepath.Join("downloads", convertedFile.Name),
+		convertedFile.Data,
+		0644,
+	)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+
+	err = json.NewEncoder(w).Encode(map[string]string{
+		"message":      "File converted successfully",
+		"download_url": "/downloads/" + convertedFile.Name,
+	})
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
