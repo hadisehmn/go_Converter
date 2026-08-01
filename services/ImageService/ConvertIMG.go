@@ -15,11 +15,23 @@ func (s *ImageService) ConvertIMG(req models.ConvertRequest) (*models.ConvertedF
 
 	switch strings.ToLower(req.OutputFormat) {
 
+	case "png":
+		return s.convertToPNG(img, req)
+
 	case "jpg", "jpeg":
 		return s.convertToJPEG(img, req)
 
-	case "png":
-		return s.convertToPNG(img, req)
+	case "gif":
+		return s.convertToGIF(img, req)
+
+	case "webp":
+		return s.convertToWEBP(img, req)
+
+	case "ico":
+		return s.convertToICO(img, req)
+
+	case "pdf":
+		return s.convertToPDF(img, req)
 
 	default:
 		return nil, errors.New("unsupported output format")

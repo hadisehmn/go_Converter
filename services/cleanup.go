@@ -18,12 +18,11 @@ func StartCleanupJob() {
 
 			for _, file := range files {
 				path := filepath.Join("downloads", file.Name())
-
 				info, err := os.Stat(path)
+
 				if err != nil {
 					continue
 				}
-
 				if time.Since(info.ModTime()) > 15*time.Minute {
 					err = os.Remove(path)
 					if err == nil {
@@ -31,7 +30,6 @@ func StartCleanupJob() {
 					}
 				}
 			}
-
 			time.Sleep(30 * time.Minute)
 		}
 	}()

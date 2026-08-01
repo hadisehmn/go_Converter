@@ -15,10 +15,8 @@ func main() {
 	http.HandleFunc("/convert", convertController.ConvertFile)
 
 	http.Handle(
-		"/downloads/",
-		http.StripPrefix(
-			"/downloads/",
-			http.FileServer(http.Dir("./downloads")),
+		"/downloads/", http.StripPrefix(
+			"/downloads/", http.FileServer(http.Dir("./downloads")),
 		),
 	)
 
