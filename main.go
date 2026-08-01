@@ -20,6 +20,11 @@ func main() {
 		),
 	)
 
+	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("Server is healthy"))
+	})
+
 	service.StartCleanupJob()
 	log.Println("Server is running on :8080")
 	err := http.ListenAndServe(":8080", nil)
