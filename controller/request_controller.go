@@ -50,18 +50,6 @@ func (h *ConvertController) ConvertFile(w http.ResponseWriter, r *http.Request) 
 
 	ext := strings.TrimPrefix(filepath.Ext(header.Filename), ".")
 
-	// convertReq := models.ConvertRequest{
-	// 	File:         file,
-	// 	Header:       header,
-	// 	InputFormat:  strings.ToLower(ext),
-	// 	OutputFormat: strings.ToLower(targetFormat),
-	// }
-	// convertedFile, err := h.service.Convert(convertReq)
-	// if err != nil {
-	// 	http.Error(w, "conversion failed", 500)
-	// 	return
-	// }
-
 	page := 1
 
 	if pageStr := r.FormValue("page"); pageStr != "" {
