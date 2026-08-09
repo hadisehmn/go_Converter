@@ -2,20 +2,25 @@ package service
 
 import (
 	"errors"
+	"strings"
+
 	"go-practice/CONVERTER/models"
 	imageservice "go-practice/CONVERTER/services/ImageService"
-	"strings"
+	pdfservice "go-practice/CONVERTER/services/PDFService"
 )
 
 type ConvertService struct {
 	imageService *imageservice.ImageService
+	pdfService   *pdfservice.PDFService
 }
 
 func NewConvertService() *ConvertService {
 	return &ConvertService{
 		imageService: imageservice.NewImageService(),
+		pdfService:   pdfservice.NewPDFService(),
 	}
 }
+
 func isImage(format string) bool {
 	switch strings.ToLower(format) {
 	case "jpg", "jpeg", "png", "gif", "bmp", "webp", "tiff", "avif", "heic":
@@ -28,9 +33,11 @@ func isImage(format string) bool {
 func (s *ConvertService) Convert(req models.ConvertRequest) (*models.ConvertedFile, error) {
 
 	switch {
-
 	case isImage(req.InputFormat):
 		return s.imageService.ConvertIMG(req)
+
+	case strings.ToLower(req.InputFormat) == "pdf":
+		return s.pdfService.ConvertPDF(req)
 
 	default:
 		return nil, errors.New("unsupported input format")

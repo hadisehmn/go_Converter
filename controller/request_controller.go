@@ -4,9 +4,11 @@ import (
 	"encoding/json"
 	"go-practice/CONVERTER/models"
 	service "go-practice/CONVERTER/services"
+	"log"
 	"net/http"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 )
 
@@ -48,17 +50,43 @@ func (h *ConvertController) ConvertFile(w http.ResponseWriter, r *http.Request) 
 
 	ext := strings.TrimPrefix(filepath.Ext(header.Filename), ".")
 
+	// convertReq := models.ConvertRequest{
+	// 	File:         file,
+	// 	Header:       header,
+	// 	InputFormat:  strings.ToLower(ext),
+	// 	OutputFormat: strings.ToLower(targetFormat),
+	// }
+	// convertedFile, err := h.service.Convert(convertReq)
+	// if err != nil {
+	// 	http.Error(w, "conversion failed", 500)
+	// 	return
+	// }
+
+	page := 1
+
+	if pageStr := r.FormValue("page"); pageStr != "" {
+		page, err = strconv.Atoi(pageStr)
+		if err != nil || page < 1 {
+			http.Error(w, "invalid page", http.StatusBadRequest)
+			return
+		}
+	}
+
 	convertReq := models.ConvertRequest{
 		File:         file,
 		Header:       header,
 		InputFormat:  strings.ToLower(ext),
 		OutputFormat: strings.ToLower(targetFormat),
+		Page:         page,
 	}
+
 	convertedFile, err := h.service.Convert(convertReq)
 	if err != nil {
-		http.Error(w, "conversion failed", 500)
+		log.Println("CONVERSION ERROR:", err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
 	err = os.MkdirAll("downloads", 0755)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
