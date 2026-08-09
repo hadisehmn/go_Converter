@@ -5,6 +5,7 @@ import (
 	"image"
 
 	"go-practice/CONVERTER/models"
+	"go-practice/CONVERTER/services/common"
 
 	"github.com/chai2010/webp"
 )
@@ -21,5 +22,5 @@ func (s *ImageService) convertToWEBP(img image.Image, req models.ConvertRequest)
 		return nil, err
 	}
 
-	return s.buildConvertedFile(output, req, "image/webp"), nil
+	return common.BuildConvertedFile(output, req, "image/webp"), nil
 }

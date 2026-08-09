@@ -7,4 +7,5 @@ type ConvertRequest struct {
 	Header       *multipart.FileHeader
 	InputFormat  string
 	OutputFormat string
+	Page         int
 }

@@ -5,6 +5,7 @@ import (
 	"image"
 
 	"go-practice/CONVERTER/models"
+	"go-practice/CONVERTER/services/common"
 
 	ico "github.com/Kodeworks/golang-image-ico"
 )
@@ -18,5 +19,5 @@ func (s *ImageService) convertToICO(img image.Image, req models.ConvertRequest) 
 		return nil, err
 	}
 
-	return s.buildConvertedFile(output, req, "image/x-icon"), nil
+	return common.BuildConvertedFile(output, req, "image/x-icon"), nil
 }

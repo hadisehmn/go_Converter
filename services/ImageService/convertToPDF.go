@@ -5,6 +5,7 @@ import (
 	"image"
 
 	"go-practice/CONVERTER/models"
+	"go-practice/CONVERTER/services/common"
 
 	"github.com/disintegration/imaging"
 	"github.com/phpdave11/gofpdf"
@@ -38,5 +39,5 @@ func (s *ImageService) convertToPDF(img image.Image, req models.ConvertRequest) 
 		return nil, err
 	}
 
-	return s.buildConvertedFile(pdfBuffer, req, "application/pdf"), nil
+	return common.BuildConvertedFile(pdfBuffer, req, "application/pdf"), nil
 }

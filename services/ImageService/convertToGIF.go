@@ -3,6 +3,7 @@ package imageservice
 import (
 	"bytes"
 	"go-practice/CONVERTER/models"
+	"go-practice/CONVERTER/services/common"
 	"image"
 	"image/gif"
 
@@ -20,5 +21,5 @@ func (s *ImageService) convertToGIF(img image.Image, req models.ConvertRequest) 
 		return nil, err
 	}
 
-	return s.buildConvertedFile(output, req, "image/gif"), nil
+	return common.BuildConvertedFile(output, req, "image/gif"), nil
 }

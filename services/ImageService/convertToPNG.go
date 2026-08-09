@@ -3,6 +3,7 @@ package imageservice
 import (
 	"bytes"
 	"go-practice/CONVERTER/models"
+	"go-practice/CONVERTER/services/common"
 	"image"
 
 	"github.com/disintegration/imaging"
@@ -17,5 +18,5 @@ func (s *ImageService) convertToPNG(img image.Image, req models.ConvertRequest) 
 		return nil, err
 	}
 
-	return s.buildConvertedFile(output, req, "image/png"), nil
+	return common.BuildConvertedFile(output, req, "image/png"), nil
 }
