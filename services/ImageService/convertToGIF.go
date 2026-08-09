@@ -13,9 +13,9 @@ func (s *ImageService) convertToGIF(img image.Image, req models.ConvertRequest) 
 
 	var output bytes.Buffer
 
-	paletted := imaging.Clone(img)
+	imageCopy := imaging.Clone(img)
 
-	err := gif.Encode(&output, paletted, nil)
+	err := gif.Encode(&output, imageCopy, nil)
 	if err != nil {
 		return nil, err
 	}
