@@ -2,7 +2,7 @@ package imageservice
 
 import (
 	"errors"
-	"go-practice/CONVERTER/models"
+	"go-practice/CONVERTER/internal/converter/models"
 	"strings"
 )
 

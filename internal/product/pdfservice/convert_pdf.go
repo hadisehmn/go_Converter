@@ -3,7 +3,7 @@ package pdfservice
 import (
 	"fmt"
 
-	"go-practice/CONVERTER/models"
+	"go-practice/CONVERTER/internal/converter/models"
 )
 
 func (s *PDFService) ConvertPDF(req models.ConvertRequest) (*models.ConvertedFile, error) {

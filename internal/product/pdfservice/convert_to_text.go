@@ -1,7 +1,7 @@
 package pdfservice
 
 import (
-	"go-practice/CONVERTER/models"
+	"go-practice/CONVERTER/internal/converter/models"
 	"io"
 
 	"github.com/ledongthuc/pdf"

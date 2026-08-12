@@ -1,9 +1,9 @@
-package controller
+package user
 
 import (
 	"encoding/json"
-	"go-practice/CONVERTER/models"
-	service "go-practice/CONVERTER/services"
+	converter "go-practice/CONVERTER/internal/converter"
+	"go-practice/CONVERTER/internal/converter/models"
 	"log"
 	"net/http"
 	"os"
@@ -13,10 +13,10 @@ import (
 )
 
 type ConvertController struct {
-	service *service.ConvertService
+	service *converter.ConvertService
 }
 
-func NewConvertController(service *service.ConvertService) *ConvertController {
+func NewConvertController(service *converter.ConvertService) *ConvertController {
 	return &ConvertController{
 		service: service,
 	}

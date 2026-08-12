@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"image"
 
-	"go-practice/CONVERTER/models"
-	"go-practice/CONVERTER/services/common"
+	"go-practice/CONVERTER/internal/converter/common"
+	"go-practice/CONVERTER/internal/converter/models"
 
 	ico "github.com/Kodeworks/golang-image-ico"
 )

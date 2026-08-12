@@ -3,8 +3,8 @@ package pdfservice
 import (
 	"bytes"
 	"fmt"
-	"go-practice/CONVERTER/models"
-	"go-practice/CONVERTER/services/common"
+	"go-practice/CONVERTER/internal/converter/common"
+	"go-practice/CONVERTER/internal/converter/models"
 	"image/jpeg"
 	"image/png"
 	"io"
