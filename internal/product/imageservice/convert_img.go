@@ -2,12 +2,12 @@ package imageservice
 
 import (
 	"errors"
-	"go-practice/CONVERTER/internal/converter/models"
 	"strings"
+
+	"go-practice/CONVERTER/internal/converter/models"
 )
 
 func (s *ImageService) ConvertIMG(req models.ConvertRequest) (*models.ConvertedFile, error) {
-
 	img, err := s.decodeImage(req.File)
 	if err != nil {
 		return nil, err
