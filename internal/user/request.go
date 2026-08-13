@@ -1,12 +1,10 @@
 package user
 
 import (
-	"encoding/json"
-	converter "go-practice/CONVERTER/internal/converter"
+	"go-practice/CONVERTER/internal/converter"
 	"go-practice/CONVERTER/internal/converter/models"
 	"log"
 	"net/http"
-	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -75,30 +73,19 @@ func (h *ConvertController) ConvertFile(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	err = os.MkdirAll("downloads", 0755)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	err = os.WriteFile(
-		filepath.Join("downloads", convertedFile.Name),
-		convertedFile.Data,
-		0644,
+	w.Header().Set("Content-Type", convertedFile.ContentType)
+	w.Header().Set(
+		"Content-Disposition",
+		`attachment; filename="`+convertedFile.Name+`"`,
 	)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	w.Header().Set(
+		"Content-Length",
+		strconv.Itoa(len(convertedFile.Data)),
+	)
 
-	w.Header().Set("Content-Type", "application/json")
-
-	err = json.NewEncoder(w).Encode(map[string]string{
-		"message":      "File converted successfully",
-		"download_url": "/downloads/" + convertedFile.Name,
-	})
+	_, err = w.Write(convertedFile.Data)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		log.Println("RESPONSE ERROR:", err)
 		return
 	}
 }
