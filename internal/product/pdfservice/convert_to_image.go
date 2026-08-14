@@ -49,13 +49,19 @@ func (s *PDFService) convertToImage(req models.ConvertRequest) (*models.Converte
 	var buffer bytes.Buffer
 
 	switch req.OutputFormat {
-	case "png":
+	case models.FormatPNG:
 		err = png.Encode(&buffer, img)
 
-	case "jpg", "jpeg":
+	case models.FormatJPG, models.FormatJPEG:
 		err = jpeg.Encode(&buffer, img, &jpeg.Options{
 			Quality: 90,
 		})
+
+	default:
+		return nil, fmt.Errorf(
+			"unsupported image format: %s",
+			req.OutputFormat,
+		)
 	}
 
 	if err != nil {
@@ -64,7 +70,8 @@ func (s *PDFService) convertToImage(req models.ConvertRequest) (*models.Converte
 
 	contentType := "image/png"
 
-	if req.OutputFormat == "jpg" || req.OutputFormat == "jpeg" {
+	if req.OutputFormat == models.FormatJPG ||
+		req.OutputFormat == models.FormatJPEG {
 		contentType = "image/jpeg"
 	}
 

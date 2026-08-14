@@ -7,13 +7,14 @@ import (
 )
 
 func (s *PDFService) ConvertPDF(req models.ConvertRequest) (*models.ConvertedFile, error) {
-
 	switch req.OutputFormat {
 
-	case "png", "jpg", "jpeg":
+	case models.FormatPNG,
+		models.FormatJPG,
+		models.FormatJPEG:
 		return s.convertToImage(req)
 
-	case "txt":
+	case models.FileFormat("TXT"):
 		return s.convertToText(req)
 
 	default:

@@ -16,7 +16,6 @@ func (s *ImageService) convertToWEBP(img image.Image, req models.ConvertRequest)
 
 	err := webp.Encode(&output, img, &webp.Options{
 		Lossless: true,
-		Quality:  100,
 	})
 	if err != nil {
 		return nil, err

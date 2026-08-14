@@ -27,12 +27,6 @@ func (h *ConvertController) ConvertFile(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	err := r.ParseMultipartForm(10 << 20)
-	if err != nil {
-		http.Error(w, "invalid form", http.StatusBadRequest)
-		return
-	}
-
 	file, header, err := r.FormFile("file")
 	if err != nil {
 		http.Error(w, "file missing", http.StatusBadRequest)
@@ -46,7 +40,10 @@ func (h *ConvertController) ConvertFile(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	ext := strings.TrimPrefix(filepath.Ext(header.Filename), ".")
+	ext := strings.TrimPrefix(
+		filepath.Ext(header.Filename),
+		".",
+	)
 
 	page := 1
 
@@ -58,11 +55,14 @@ func (h *ConvertController) ConvertFile(w http.ResponseWriter, r *http.Request) 
 		}
 	}
 
+	inputFormat := models.FileFormat(strings.ToUpper(ext))
+	outputFormat := models.FileFormat(strings.ToUpper(targetFormat))
+
 	convertReq := models.ConvertRequest{
 		File:         file,
 		Header:       header,
-		InputFormat:  strings.ToLower(ext),
-		OutputFormat: strings.ToLower(targetFormat),
+		InputFormat:  inputFormat,
+		OutputFormat: outputFormat,
 		Page:         page,
 	}
 
@@ -74,10 +74,12 @@ func (h *ConvertController) ConvertFile(w http.ResponseWriter, r *http.Request) 
 	}
 
 	w.Header().Set("Content-Type", convertedFile.ContentType)
+
 	w.Header().Set(
 		"Content-Disposition",
 		`attachment; filename="`+convertedFile.Name+`"`,
 	)
+
 	w.Header().Set(
 		"Content-Length",
 		strconv.Itoa(len(convertedFile.Data)),

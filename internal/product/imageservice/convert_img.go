@@ -2,7 +2,6 @@ package imageservice
 
 import (
 	"errors"
-	"strings"
 
 	"go-practice/CONVERTER/internal/converter/models"
 )
@@ -13,24 +12,24 @@ func (s *ImageService) ConvertIMG(req models.ConvertRequest) (*models.ConvertedF
 		return nil, err
 	}
 
-	switch strings.ToLower(req.OutputFormat) {
+	switch req.OutputFormat {
 
-	case "png":
+	case models.FormatPNG:
 		return s.convertToPNG(img, req)
 
-	case "jpg", "jpeg":
+	case models.FormatJPG, models.FormatJPEG:
 		return s.convertToJPEG(img, req)
 
-	case "gif":
+	case models.FormatGIF:
 		return s.convertToGIF(img, req)
 
-	case "webp":
+	case models.FormatWEBP:
 		return s.convertToWEBP(img, req)
 
-	case "ico":
+	case models.FormatICO:
 		return s.convertToICO(img, req)
 
-	case "pdf":
+	case models.FormatPDF:
 		return s.convertToPDF(img, req)
 
 	default:

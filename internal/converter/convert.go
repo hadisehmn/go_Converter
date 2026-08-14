@@ -2,7 +2,6 @@ package converter
 
 import (
 	"errors"
-	"strings"
 
 	"go-practice/CONVERTER/internal/converter/models"
 	imageservice "go-practice/CONVERTER/internal/product/imageservice"
@@ -20,11 +19,17 @@ func NewConvertService() *ConvertService {
 		pdfService:   pdfservice.NewPDFService(),
 	}
 }
+func isImage(format models.FileFormat) bool {
+	switch format {
+	case models.FormatPNG,
+		models.FormatJPG,
+		models.FormatJPEG,
+		models.FormatGIF,
+		models.FormatTXT,
+		models.FormatWEBP:
 
-func isImage(format string) bool {
-	switch strings.ToLower(format) {
-	case "jpg", "jpeg", "png", "gif", "bmp", "webp", "tiff", "avif", "heic":
 		return true
+
 	default:
 		return false
 	}
@@ -36,7 +41,7 @@ func (s *ConvertService) Convert(req models.ConvertRequest) (*models.ConvertedFi
 	case isImage(req.InputFormat):
 		return s.imageService.ConvertIMG(req)
 
-	case strings.ToLower(req.InputFormat) == "pdf":
+	case req.InputFormat == models.FormatPDF:
 		return s.pdfService.ConvertPDF(req)
 
 	default:
