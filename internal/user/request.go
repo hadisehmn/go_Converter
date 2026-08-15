@@ -1,7 +1,7 @@
 package user
 
 import (
-	"go-practice/CONVERTER/internal/converter"
+	converter "go-practice/CONVERTER/internal/converter/convert"
 	"go-practice/CONVERTER/internal/converter/models"
 	"log"
 	"net/http"

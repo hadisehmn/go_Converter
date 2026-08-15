@@ -25,7 +25,7 @@ func isImage(format models.FileFormat) bool {
 		models.FormatJPG,
 		models.FormatJPEG,
 		models.FormatGIF,
-		models.FormatTXT,
+		models.FormatICO,
 		models.FormatWEBP:
 
 		return true

@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	converter "go-practice/CONVERTER/internal/converter"
+	converter "go-practice/CONVERTER/internal/converter/convert"
 	"go-practice/CONVERTER/internal/user"
 )
 
