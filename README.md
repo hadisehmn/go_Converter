@@ -1,26 +1,38 @@
+
 # GoConvert
 
-GoConvert is a file converter written in Go.
-This project is built to learn Go by implementing a file conversion service.
+GoConvert is a file conversion service built with Go.
 
-## Learning Goals
+The project provides a REST API that allows clients to upload files, convert
+them to another format, and download the converted result.
 
-- Go
-- HTTP servers
-- File processing
-- REST APIs
-- Clean code
+GoConvert was built as a practical project to learn and apply Go, HTTP servers,
+file processing, REST API design, clean code, and deployment.
 
-The application will receive a file from a client, convert it to another format, and return the converted file.
+## Features
 
-## Planned Features
-
-- Upload a file
-- Detect the input file format
-- Convert the file
-- Return the converted file
+- Upload files through a REST API
+- Detect input file formats
+- Convert files to supported formats
+- Return converted files to the client
 - Support multiple file formats
+- HTTP API
+- Error handling
+- Deployed and available on a production server
 
-## Current Status
-Work in Progress :) 
+## Tech Stack
 
+- **Go** — Application development
+- **HTTP** — Server and request handling
+- **REST API** — API communication
+- **File Processing** — File conversion and handling
+
+## API
+
+### Convert File
+
+Convert an uploaded file to the requested format.
+
+```http
+POST /convert
+Content-Type: multipart/form-data
